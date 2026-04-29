@@ -1,5 +1,7 @@
 # AI-Assisted Playwright TypeScript POM Framework
 
+![Playwright Tests](https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME/actions/workflows/playwright-tests.yml/badge.svg)
+
 A portfolio-ready Playwright framework demonstrating how AI can scaffold, extend, refactor, and review test automation responsibly. The suite uses a deterministic demo application loaded in the browser, so the tests are stable and do not depend on external websites.
 
 ## What this framework does
@@ -33,13 +35,13 @@ npx playwright install chromium
 npm test
 ```
 
-Run checks before opening a pull request:
+Run the same checks used by GitHub Actions before opening a pull request:
 
 ```bash
-npm run typecheck
-npm run lint
-npm test
+npm run ci
 ```
+
+The CI command runs TypeScript validation, ESLint, the custom quality gate, and the Playwright suite.
 
 View the HTML report:
 
@@ -58,6 +60,7 @@ src/pages/*.ts                           concrete page objects
 tests/e2e/*.spec.ts                      end-to-end test specs
 docs/prompts/                            reusable AI prompt templates
 docs/reviews/                            AI review and verification checklist
+scripts/quality-gate.mjs                 guardrail blocking hard waits/raw locators
 playwright.config.ts                     Playwright configuration
 ```
 
@@ -77,7 +80,7 @@ playwright.config.ts                     Playwright configuration
 
 ## CI/CD
 
-The workflow runs on every push and pull request targeting `main`. It installs dependencies, installs Chromium, runs type checking, runs Playwright tests, and uploads HTML reports/traces as artifacts.
+The workflow runs on every push and pull request. It installs dependencies, installs Chromium with required Linux system dependencies, runs type checking, ESLint, the quality gate, and Playwright tests, then uploads HTML reports/traces as artifacts.
 
 ## Responsible AI usage
 
@@ -106,3 +109,16 @@ git commit -m "test: add auth search and checkout coverage"
 git add .github docs README.md
 git commit -m "ci: add GitHub Actions and AI review documentation"
 ```
+
+## Portfolio readiness checklist
+
+- [x] Page Object Model architecture with `BasePage` and concrete page classes
+- [x] 11 automated Playwright tests
+- [x] Role/test-id based locators centralized in page/component objects
+- [x] No hard waits; Playwright web-first assertions are used
+- [x] GitHub Actions pipeline for push and pull request events
+- [x] TypeScript strict mode, ESLint, and a custom quality gate
+- [x] README, AI prompt template, and AI review checklist
+- [x] Local git history with iterative commits
+
+> After publishing to GitHub, replace `YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME` in the badge URL with your real repository path.

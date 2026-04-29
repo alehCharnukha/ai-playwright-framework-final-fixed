@@ -1,1 +1,24 @@
-{"name":"ai-assisted-playwright-pom-framework","version":"1.0.0","private":true,"description":"Portfolio-ready AI-assisted Playwright TypeScript framework using Page Object Model and GitHub Actions.","scripts":{"test":"playwright test","test:headed":"playwright test --headed","test:ui":"playwright test --ui","test:debug":"playwright test --debug","report":"playwright show-report","lint":"eslint .","typecheck":"tsc --noEmit"},"devDependencies":{"@playwright/test":"^1.52.0","@types/node":"^22.15.0","eslint":"^9.25.0","typescript":"^5.8.3","typescript-eslint":"^8.31.0"}}
+{
+  "name": "ai-assisted-playwright-pom-framework",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfolio-ready AI-assisted Playwright TypeScript framework using Page Object Model and GitHub Actions.",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "quality": "node scripts/quality-gate.mjs",
+    "ci": "npm run typecheck && npm run lint && npm run quality && npm test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.0",
+    "eslint": "^9.25.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.31.0"
+  }
+}

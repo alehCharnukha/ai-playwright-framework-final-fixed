@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   playwright-tests:
-    name: Type check, lint and Playwright tests
+    name: Type check, lint, quality gate and Playwright tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
@@ -36,14 +36,8 @@ jobs:
       - name: Install Chromium with Playwright system dependencies
         run: npx playwright install --with-deps chromium
 
-      - name: Run type check
-        run: npm run typecheck
-
-      - name: Run lint
-        run: npm run lint
-
-      - name: Run Playwright tests
-        run: npm test
+      - name: Run CI checks and Playwright tests
+        run: npm run ci
 
       - name: Upload Playwright HTML report
         if: always()
