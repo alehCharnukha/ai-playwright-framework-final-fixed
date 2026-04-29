@@ -11,7 +11,7 @@ export class SearchPage extends BasePage {
   productResult(name: string): Locator { return this.page.getByRole('heading', { name }); }
 
   async open(): Promise<void> {
-    await this.loadDemoApp();
+    await this.openApp('/search');
     await expect(this.page.getByRole('heading', { name: 'Search products' })).toBeVisible();
   }
 

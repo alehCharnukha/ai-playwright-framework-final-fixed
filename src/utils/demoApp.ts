@@ -3,7 +3,7 @@ export function buildDemoAppHtml(): string {
   return `<!doctype html><html lang="en"><head><meta charset="UTF-8"><title>AI Shop Demo</title></head>
   <body>
     <header>
-      <a href="#home" role="link">AI Shop</a>
+      <a href="/search" role="link">AI Shop</a>
       <button data-testid="cart-button">Cart <span data-testid="cart-badge">0</span></button>
       <span data-testid="user-avatar" hidden>QA</span>
     </header>
@@ -53,7 +53,7 @@ export function buildDemoAppHtml(): string {
       </section>
     </main>
     <script>
-      const show = id => document.querySelectorAll('main > section').forEach(s => s.hidden = s.dataset.testid !== id);
+      const show = id => document.querySelectorAll('main > section').forEach(section => section.hidden = section.dataset.testid !== id);
       document.querySelector('[data-testid="login-button"]').addEventListener('click', () => {
         const email = document.querySelector('[data-testid="email-input"]').value;
         const pwd = document.querySelector('[data-testid="password-input"]').value;
@@ -68,7 +68,12 @@ export function buildDemoAppHtml(): string {
       document.querySelector('[data-testid="cart-button"]').addEventListener('click', () => { history.pushState({}, '', '/cart'); show('cart-page'); });
       document.querySelector('[data-testid="checkout-button"]').addEventListener('click', () => { history.pushState({}, '', '/checkout'); show('checkout-page'); });
       document.querySelector('[data-testid="place-order"]').addEventListener('click', () => document.querySelector('[data-testid="order-status"]').hidden = false);
-      history.replaceState({}, '', '/login'); show('login-page');
+      const initialPath = window.location.pathname;
+      if (initialPath === '/search') show('search-page');
+      else if (initialPath === '/cart') show('cart-page');
+      else if (initialPath === '/checkout') show('checkout-page');
+      else if (initialPath.startsWith('/product')) show('product-page');
+      else show('login-page');
     </script>
   </body></html>`;
 }

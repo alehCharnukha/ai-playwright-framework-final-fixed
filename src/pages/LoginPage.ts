@@ -12,7 +12,7 @@ export class LoginPage extends BasePage {
   errorMessage(): Locator { return this.page.getByRole('alert'); }
 
   async open(): Promise<void> {
-    await this.loadDemoApp();
+    await this.openApp('/login');
     await expect(this.page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
   }
 

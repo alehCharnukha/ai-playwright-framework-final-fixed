@@ -5,9 +5,20 @@ import { buildDemoAppHtml } from '../utils/demoApp';
 export abstract class BasePage {
   protected constructor(protected readonly page: Page) {}
 
-  /** Loads the deterministic demo application into the browser context. */
-  async loadDemoApp(): Promise<void> {
-    await this.page.setContent(buildDemoAppHtml(), { waitUntil: 'domcontentloaded' });
+  /**
+   * Serves the deterministic demo application through Playwright routing and opens a path.
+   * This keeps tests independent from external websites while still allowing URL assertions.
+   */
+  async openApp(path = '/login'): Promise<void> {
+    await this.page.route('**/*', async route => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'text/html',
+        body: buildDemoAppHtml()
+      });
+    });
+
+    await this.page.goto(path, { waitUntil: 'domcontentloaded' });
   }
 
   /** Verifies that a locator is visible using Playwright auto-retry assertions. */

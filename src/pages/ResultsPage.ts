@@ -7,13 +7,19 @@ export class ResultsPage extends BasePage {
   items(): Locator { return this.page.getByTestId('result-item'); }
   selectFirstProduct(): Locator { return this.page.getByTestId('select-product').first(); }
 
-  async getAllPrices(): Promise<number[]> {
-    const prices = await this.page.getByTestId('result-price').allTextContents();
+  /** Returns numeric prices for all currently visible result items. */
+  async getAllVisiblePrices(): Promise<number[]> {
+    const prices = await this.page
+      .getByTestId('result-item')
+      .filter({ visible: true })
+      .getByTestId('result-price')
+      .allTextContents();
+
     return prices.map(price => Number(price.replace('$', '')));
   }
 
+  /** Verifies every visible result price is below the supplied limit using an auto-retrying assertion. */
   async expectAllPricesBelow(limit: number): Promise<void> {
-    const prices = await this.getAllPrices();
-    expect(prices.every(price => price < limit)).toBeTruthy();
+    await expect.poll(async () => this.getAllVisiblePrices()).toSatisfy(prices => prices.length > 0 && prices.every(price => price < limit));
   }
 }

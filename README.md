@@ -6,7 +6,7 @@ A portfolio-ready Playwright framework demonstrating how AI can scaffold, extend
 
 - Implements Page Object Model with `BasePage` and concrete pages.
 - Uses a shared `Header` component.
-- Runs 10 automated Playwright specs covering authentication, search, cart, and checkout flows.
+- Runs 11 automated Playwright specs covering authentication, search, cart, and checkout flows.
 - Uses stable locators: `getByRole`, `getByTestId`, and accessible labels.
 - Avoids hard waits and relies on Playwright web-first auto-retry assertions.
 - Includes GitHub Actions CI for push and pull request validation.
