@@ -20,6 +20,9 @@ export class ResultsPage extends BasePage {
 
   /** Verifies every visible result price is below the supplied limit using an auto-retrying assertion. */
   async expectAllPricesBelow(limit: number): Promise<void> {
-    await expect.poll(async () => this.getAllVisiblePrices()).toSatisfy(prices => prices.length > 0 && prices.every(price => price < limit));
+    await expect.poll(async () => {
+      const prices = await this.getAllVisiblePrices();
+      return prices.length > 0 && prices.every(price => price < limit);
+    }, { timeout: 10000 }).toBeTruthy();
   }
 }
